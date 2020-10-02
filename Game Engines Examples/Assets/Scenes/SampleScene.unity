@@ -326,6 +326,7 @@ GameObject:
   - component: {fileID: 482222225}
   - component: {fileID: 482222226}
   - component: {fileID: 482222227}
+  - component: {fileID: 482222228}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -457,6 +458,21 @@ MonoBehaviour:
   spawnPoint: {fileID: 1690027507}
   bulletPrefab: {fileID: 1850118630018322559, guid: c060ee05cdf4e1b408c057f1877b2636,
     type: 3}
+--- !u!114 &482222228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 482222220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa90e6c6dff20f44bba37a0facc071a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  elements: 6
+  radius: 1
+  layers: 10
 --- !u!1 &534669902
 GameObject:
   m_ObjectHideFlags: 0
@@ -773,7 +789,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1441207118
 MonoBehaviour:
   m_ObjectHideFlags: 0
