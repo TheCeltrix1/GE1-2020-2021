@@ -43,53 +43,96 @@
 - Week 5 - CA proposal & Git repo - 10%
 - Week 13 - CA Submission & Demo - 40%
 
-## Week 2 - Trigonometry & Co-routines, materials & shaders
+## Week 3 - Coroutines, colliders and triggers
+## Lecture
 
-- [Slides](https://drive.google.com/file/d/1uiPqd1KUUAJwgv56NGR6e5amJMt9uEO2/view?usp=sharing)
+Lets make this:
+
+[![YouTube](http://img.youtube.com/vi/HJP7AO8pCyM/0.jpg)](http://www.youtube.com/watch?v=HJP7AO8pCyM)
+
+Clone the repo for the course and make sure you start from the master branch. Create a branch for todays solution (call it lab4)
+
+What is happening:
+
+- The green tank is the player. The blue tanks are the "enemies"
+- Enemies spawn at a rate of 1 enemy per second
+- Enemies fall from the sky and land on the ground
+- There are a maximum of 5 enemies at any time
+- After 4 seconds, it sinks into the ground. You can disable the collider on the tank and set drag to be 1
+- After seven seconds, it gets removed from the scene
+
+Advanced!
+
+- When the player hits an enemy it "explodes" (all the parts break apart)
+- To implement this you will have to do a few things:
+- Iterate over all the child transforms to get access to the turret using:
+
+    ```foreach (Transform t in this.GetComponentsInChildren<Transform>())
+    ```
+- You could also use ```transform.getChild(0)```
+- Add a rigidbody to the turret
+- Set the useGravity and isKinematic fields on the rigidbody appropriately
+- Add a random velocity 
+
 
 ## Lab
-- Become familiar with Unity 
-- Use trigonometry and the unit circle to make a generative thing
-- Modify a shader
 
-## Instructions
+Your task today is to recreate this system from Infinite Forms:
 
-This is a screenshot of the first part of what you guys can make today:
+[![YouTube](http://img.youtube.com/vi/wvu5DuJydKY/0.jpg)](http://www.youtube.com/watch?v=wvu5DuJydKY)
 
-![Mandala](images/mandala1.png)
+Clone the repo for the course and make sure you start from the master branch. Create a branch for todays solution (call it lab3)
 
-And this is a video of part two, which involves modifying a shader to generate the colours:
+Open up the lab2 scene. There is the coloured tank following it's circular path (solution from last week). We are going to add a control orb to the red tank so that the player can enter the orb and take control of the red tank.
 
-[![Video](http://img.youtube.com/vi/tL6ux8isdgY/0.jpg)](http://www.youtube.com/watch?tL6ux8isdgY)
+- Use the dode and attach it at an appropriate position on the red tank
+- Add the TankController script to the coloured tank and set it to be disabled
+- Make a script called RotateMe that performs a local rotation and attach it to the orb so that the orb spins by itself
+- Add a sphere collider to the orb and set the isTrigger flag to be true
+- Add a script called OrbController to the orb and add methods for OnTriggerEnter and OnTriggerStay. OnTriggerEnter gets called on the script whenever the attached collider overlaps with another collider. OnTriggerStay gets called once per frame so long as the collider is still overlapping.
+- In OnTriggerEnter you need to:
+    - Check you are colliding with the player
+    - If so, disable the FPS Controller on the player and enable the TankController script on the tank
+    - Disable the EnemyTankController on the Enemy Tank
+    - Disable the RotateMe script on the orb
+- In OnTriggetStay you need to:    
+    - Check you are colliding with the player
+    - Lerp the camera position and slerp the camera rotation
+    - Check for the space key, if pressed this frame:
+        - Disable the TankController on the tank
+        - Enable the EnemyTankController
+        - Enable the Tank controller
+        - Enable the RotateMe script
 
-- First make sure your fork is updated so you get the latest branches from the upstream.
-- Switch to the lab1starter branch:
+I may have left out some steps, but you can figure out the rest yourself
 
-```bash
-git checkout lab1starter
-```
+## Week 2 - Tank game, trigonometry & vectors
+- [Slides](https://drive.google.com/file/d/14pWZNf2Z-FX096wCLHt9t6tLorS323-k/view?usp=sharing)
+- [Trigonometry problem set](https://1.cdn.edl.io/IDqRlI8C9dRkoqehbbdHBrcGT6m87gkCQuMKTkp0U7JvHvuG.pdf)
 
-### Part A
+## Lab
+### Learning Outcomes
+- Build a simple agent with perception
+- Develop computation thinking
+- Use trigonometry
+- Use vectors
+- Use the Unity API
+- Practice C#
 
-- Open the scene trigscene and check out the hierarchy and the position and orientation of the camera & the generator.
-- Add a new script to the Generator gameobject called Generator
-- Add public fields for rings - the number of rings to create and for the prefab to use. 
-- Drag the prefab from the project onto the field in the Unity editor
-- Now here is the challenge! Write code in the Start method to instantiate instances of the prefab in rings, centred at 0,0,0 on the X-Y plane This will be a nested for loop. But I suggest you try and create one ring first (in a loop) and then enclose that loop in an outer loop to create multiple rings.
-- You will see that the inside ring had 5 objects and the subsequent rings increase the number of objects so that the spacing on each ring is equal. You can use the circumference of a circle equation to calculate the number of objects each circle should contain.
-- Add a script to the prefab so that it rotates around the Y axis. You should add a field for the rotation speed.
-- See if you can figure out how set colours on each loop so that the colours span the hue colour space from 0-1
+### Instructions
 
-### Part B
+Today you will be making this:
 
-- Create a material called ColorMaterial and assign the shader Custom/ColorShader to the material.
-- Assign the material to the prefab by dropping it on the prefab.
-- Open up the file ColorShader.shader and look for the function ```void surf (Input IN, inout SurfaceOutputStandard o)```
-- You should assign the variable hue to a value between 0 and 1 based on the distance of the vertex from the origin. 
-- You have some input variables to work with which are:
-```IN.worldPos.x``` and ```IN.worldPos.y``` (the vertex x and y) and some functions you can use sqrt, pow, abs. And the modulus operator %
-- You can also use the built in variable _Time that gives the time in seconds since the program started. It's a float.
-- If all goes well, you should be able to create the effect in the video.
+[![YouTube](http://img.youtube.com/vi/kC_W1WBB7uY/0.jpg)](http://www.youtube.com/watch?v=kC_W1WBB7uY)
+
+What is happening:
+- The red tank has a script attached that has radius and numWaypoints fields that control the generation of waypoints in a circle around it. It draws sphere gizmos so you can see where the waypoints will be.
+- The red tank will follow the waypoints starting at the 0th one and looping back when it reaches the last waypoint.
+- The red tank prints the messages using the Unity GUI system to indicate:
+    - Whether the blue tank is in front or behind
+    - Whether the front tank is inside a 45 degree FOV
+    - Use the [Unity reference](unityref.md) to figure out what API's to call!
+
 
 ## Week 1 - Introduction
 ## Lecture
