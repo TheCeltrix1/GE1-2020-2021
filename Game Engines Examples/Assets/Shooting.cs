@@ -9,10 +9,13 @@ public class Shooting : MonoBehaviour
 
     public float fireRate = 3;
 
+    private bool _var;
+
     // Start is called before the first frame update
-    void Start()
+    void OnEnable()
     {
-        
+        StartCoroutine(ShootingCoroutine());
+        //StartCoroutine(PenisSauce());
     }
 
     void Shoot()
@@ -20,11 +23,6 @@ public class Shooting : MonoBehaviour
         GameObject bullet = GameObject.Instantiate<GameObject>(bulletPrefab);
         bullet.transform.position = spawnPoint.position;
         bullet.transform.rotation = this.transform.rotation;
-    }
-
-    void OnEnable()
-    {
-        StartCoroutine(ShootingCoroutine());
     }
 
     bool shooting = false;
@@ -42,9 +40,12 @@ public class Shooting : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    IEnumerator PenisSauce()
     {
-        
+        while (true)
+        {
+            Shoot();
+            yield return new WaitForSeconds(1 / (float)fireRate);
+        }
     }
 }
