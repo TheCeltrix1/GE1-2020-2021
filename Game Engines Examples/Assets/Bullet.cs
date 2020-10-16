@@ -11,8 +11,8 @@ public class Bullet : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public void Fire()
     {
-        transform.Translate(0, 0, 5 * Time.deltaTime);
+        this.GetComponent<Rigidbody>().velocity = this.transform.forward * 15;
     }
 }

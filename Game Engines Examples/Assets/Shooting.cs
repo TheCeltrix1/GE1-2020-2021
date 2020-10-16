@@ -20,6 +20,7 @@ public class Shooting : MonoBehaviour
         GameObject bullet = GameObject.Instantiate<GameObject>(bulletPrefab);
         bullet.transform.position = spawnPoint.position;
         bullet.transform.rotation = this.transform.rotation;
+        bullet.GetComponent<Bullet>().Fire();
     }
 
     void OnEnable()
